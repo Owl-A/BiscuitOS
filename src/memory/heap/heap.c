@@ -112,14 +112,14 @@ out:
 }
 
 int heap_address_to_block(struct heap* heap, void* ptr){
-  return ((int) ( address - heap->saddr)) / HEAP_BLOCK_SIZE;
+  return ((int) ( ptr - heap->saddr)) / HEAP_BLOCK_SIZE;
 }
 
 void heap_mark_blocks_free(struct heap* heap, int starting_block){
   struct heap_table* table = heap->table;
   for ( int i = starting_block; i < (int)table->total; i++ ) {
     HEAP_BLOCK_TABLE_ENTRY entry = table->entries[i];
-    table_entries[i] = HEAP_BLOCK_TABLE_ENTRY_FREE;
+    table->entries[i] = HEAP_BLOCK_TABLE_ENTRY_FREE;
 
     if (!(entry & HEAP_BLOCK_HAS_NEXT)){
       break;
